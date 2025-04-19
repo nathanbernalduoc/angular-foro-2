@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
-import { LibroService } from '../../services/libro.service';
+import { ForoService } from '../../services/foro.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,18 +13,17 @@ import { Observable } from 'rxjs';
   imports: [ CommonModule , ReactiveFormsModule, HttpClientModule],
   templateUrl: './principal.component.html',
   styleUrl: './principal.component.css',
-  providers: [LibroService, HttpClient]
+  providers: [ForoService, HttpClient]
 })
 
 export class PrincipalComponent implements OnInit {
 
   resultado:string = '';
-  titulo = 'Libro';
-  libro: any[] = []; // {} objeto | [] array
+  titulo = 'Foro';
+  foro: any[] = []; // {} objeto | [] array
   inventario: any[] = []; // {} objeto | [] array
-  autor: String = "";
-  publicacion: number = 0;
-  genero: String = "";
+  nombre: String = "";
+  categoriaId: number = 0;
   idNew: number = 0;
 
   miFormulario!: FormGroup;
@@ -32,32 +31,30 @@ export class PrincipalComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private jsonService: LibroService,
+    private jsonService: ForoService,
   ) {
-    this.getLibro();
+    this.getForo();
   }
 
   ngOnInit(): void {
 
-    console.log('libros no recuperada '+JSON.stringify(this.libro));
+    console.log('foros no recuperada '+JSON.stringify(this.foro));
 
     this.miFormulario = this.fb.group({
-      libroId: [''],
-      titulo: ['', Validators.required],
-      autor: ['', Validators.required],
-      publicacion: ['', Validators.required],
-      genero: [''],
+      foroId: [''],
+      nombre: ['', Validators.required],
+      categoriaId: ['', Validators.required]
     });
 
   }
 
 
-  getLibro() {
+  getForo() {
 
-    this.jsonService.getLibroData().subscribe(
+    this.jsonService.getForoData().subscribe(
       valor => {
-        console.log("Recuperando libros "+JSON.stringify(valor));
-        this.libro = valor;
+        console.log("Recuperando foros "+JSON.stringify(valor));
+        this.foro = valor;
       },
       error => {
         console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);
@@ -67,25 +64,24 @@ export class PrincipalComponent implements OnInit {
 
   }
 
-  goDetalle(libro:string): void {
-    console.log('Hola '+libro);
-    this.router.navigate(['detalle', {libro: libro}]);
+  goDetalle(foroId:string): void {
+    console.log('Hola '+foroId);
+    this.router.navigate(['detalle', {foroId: foroId}]);
   }
 
   submitForm() {
-
-    this.idNew = this.libro[this.libro.length-1].id + 1;
+    console.log(this.foro.length);
+    this.idNew = this.foro.length ? this.foro[this.foro.length-1].id + 1:1;
 
     console.log('Validando');
-    this.titulo = this.miFormulario.get('titulo')!.value;
-    this.autor = this.miFormulario.get('autor')!.value;
-    this.publicacion = this.miFormulario.get('publicacion')!.value;
-    this.genero = this.miFormulario.get('genero')!.value;
+    this.nombre = this.miFormulario.get('nombre')!.value;
+    this.categoriaId = this.miFormulario.get('categoriaId')!.value;
 
-    this.jsonService.setLibroData(this.idNew, this.titulo, this.autor, this.publicacion, this.genero).subscribe(
+    this.jsonService.setForoData(this.idNew, this.nombre, this.categoriaId).subscribe(
       valor => {
-        console.log("Feedback inserción libro "+JSON.stringify(valor));
-        this.libro = valor;
+        console.log("Feedback inserción foro "+JSON.stringify(valor));
+        this.foro = valor;
+        this.getForo();
       },
       error => {
         console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);

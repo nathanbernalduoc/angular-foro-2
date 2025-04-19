@@ -63,7 +63,7 @@ function formularioLimpiar() {
     document.getElementById('titulo').value = '';
     document.getElementById('autor').value = '';
     document.getElementById('publicacion').value = '';
-    document.getElementById('genero').value = '';
+    document.getElementById('categoria').value = '';
 
 }
 

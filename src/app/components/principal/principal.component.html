@@ -1,5 +1,5 @@
 <div id="title" class="d-none d-md-block d-lg-block">
-  <h1 class="my-btn">Nathan - Libros</h1>
+  <h1 class="my-btn">Nathan - Foros</h1>
 </div>
 
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" (click)="getLibro()">Libros
+          <a class="nav-link active" (click)="getForo()">Foros
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
@@ -27,32 +27,29 @@
   </div>
 </nav>
 
-<h3>Libros</h3>
+<h3>Foros</h3>
 
 <hr>
 
 <div class="row">
 
-  <div *ngIf="libro && libro.length>0; else noData">
-    <div *ngFor="let c of libro" class="col-lg-12 col-sm-12">
+  <div *ngIf="foro && foro.length>0; else noData">
+    <div *ngFor="let c of foro" class="col-lg-12 col-sm-12">
 
       <div class="card mb-">
-        <h3 class="card-header">{{c.titulo}}</h3>
+        <h3 class="card-header">{{c.nombre}}</h3>
         <div class="card-body">
-          <h5 class="card-title">{{c.autor}}</h5>
-          <h6 class="card-subtitle text-muted">{{c.publicacion}}</h6>
+          <h5 class="card-title">{{c.usuarioId}}</h5>
           <br>
-          <h6 class="card-subtitle text-muted">{{c.genero}}</h6>
-        </div>
-        <div class="card-body">
-          <button class="card-link" (click)="goDetalle(c.libroId)">Ver juegos</button>
+          <h6 class="card-subtitle text-muted">{{c.categoria}}</h6>
+          <button class="card-link" (click)="goDetalle(c.id)">Ver comentarios</button>
         </div>
       </div>
     </div>
   </div>
 
   <ng-template #noData>
-    <p>No se han encontrado libros disponibles.</p>
+    <p>No se han encontrado foros disponibles.</p>
   </ng-template>
 </div>
 
@@ -75,50 +72,29 @@
 
         <fieldset>
 
-          <legend>Nuevo libro</legend>
+          <legend>Nuevo foro</legend>
 
           <div>
 
-            <label for="titulo" class="form-label mt-4">Título</label>
-            <input type="text" class="form-control" id="titulo" formControlName="titulo" >
-            <div *ngIf="miFormulario.get('titulo')!.touched && miFormulario.get('titulo')!.errors">
-              <div class="alert alert-danger" *ngIf="miFormulario.get('titulo')!.value == ''">
-                El título es obligatorio.
+            <label for="nombre" class="form-label mt-4">Nombre del foro</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" >
+            <div *ngIf="miFormulario.get('nombre')!.touched && miFormulario.get('nombre')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario.get('nombre')!.value == ''">
+                El nombre es obligatorio.
               </div>
             </div>
 
           </div>
 
           <div>
-            <label for="autor" class="form-label mt-4">Autor</label>
-            <input type="text" class="form-control" id="autor" formControlName="autor" maxlength="18">
-            <div *ngIf="miFormulario.get('autor')!.touched && miFormulario.get('autor')!.errors">
-              <div class="alert alert-danger" *ngIf="miFormulario.get('autor')!.hasError('required')">
-                El autor es obligatorio.
+            <label for="categoriaId" class="form-label mt-4">Categoria</label>
+            <input type="text" class="form-control" id="categoriaId" formControlName="categoriaId" maxlength="18">
+            <div *ngIf="miFormulario.get('categoriaId')!.touched && miFormulario.get('categoriaId')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario.get('categoriaId')!.hasError('required')">
+                La categoría es obligatorio.
               </div>
             </div>
           </div>
-
-          <div>
-            <label for="publicacion" class="form-label mt-4">A&ntilde;p publicaci&oacute;n</label>
-            <input type="number" class="form-control" id="publicacin" formControlName="publicacion">
-            <div *ngIf="miFormulario.get('publicacion')!.touched">
-              <div class="alert alert-danger" *ngIf="miFormulario.get('publicacion')!.hasError('required')">
-                El a&ntilde;o de publicaci&oacute;nn es obligatoria.
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label for="genero" class="form-label mt-4">G&eacute;nero</label>
-            <input type="text" class="form-control" id="genero" formControlName="genero">
-            <div *ngIf="miFormulario.get('genero')!.touched && miFormulario.get('genero')!.errors">
-              <div class="alert alert-danger" *ngIf="miFormulario.get('genero')!.hasError('required')">
-                El género es obligatorio.
-              </div>
-            </div>
-          </div>
-
           <hr>
 
           <button type="submit" [disabled]="!miFormulario.valid" class="btn btn-primary">Guardar</button>

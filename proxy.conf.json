@@ -1,6 +1,6 @@
 {
-    "/libros*": {
-        "target": "http://localhost:8080",
+    "/foro*": {
+        "target": "http://localhost:8081",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true

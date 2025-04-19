@@ -27,11 +27,9 @@ describe('PrincipalComponent', () => {
 
     component.miFormulario.setValue(
       {
-        libroId: '',
-        titulo: '',
-        autor: '',
-        publicacion: '',
-        genero: ''
+        foroId: '',
+        nombre: '',
+        categoriaId: ''
       }
     );
     //component.submitForm();
@@ -43,11 +41,9 @@ describe('PrincipalComponent', () => {
 
     component.miFormulario.setValue(
       {
-        libroId: '',
-        titulo: '',
-        autor: '',
-        publicacion: '',
-        genero: ''
+        foroId: '',
+        nombre: '',
+        categoriaId: ''
       }
     );
     //component.submitForm();
