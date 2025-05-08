@@ -67,3 +67,9 @@ function formularioLimpiar() {
 
 }
 
+
+function formularioLimpiar2() {
+
+    document.getElementById('comentarioIn').value = '';
+
+}

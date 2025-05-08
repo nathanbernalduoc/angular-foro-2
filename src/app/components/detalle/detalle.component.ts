@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-detalle',
   standalone: true,
-  imports: [ CommonModule, HttpClientModule ],
+  imports: [ CommonModule, HttpClientModule, ReactiveFormsModule ],
   templateUrl: './detalle.component.html',
   styleUrl: './detalle.component.css',
   providers: [ForoService, HttpClient]
@@ -22,14 +22,20 @@ export class DetalleComponent implements OnInit {
   comentario: any = [];
   foroParam: String = "";
   idNew: number = 0;
-  miFormulario!: FormGroup;
+  miFormulario2!: FormGroup;
   resultado:string = '';
   
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private jsonService: ForoService,
-    private activatedRoute: ActivatedRoute) {}
+    private activatedRoute: ActivatedRoute) {
+
+      this.activatedRoute.paramMap.subscribe(params => {
+        const id = params.get("foroId");
+      });
+
+    }
   
   ngOnInit(): void {
 
@@ -38,22 +44,24 @@ export class DetalleComponent implements OnInit {
       }
     )
 
-    this.miFormulario = this.fb.group({
+    this.miFormulario2 = this.fb.group({
       comentarioId: [''],
       foroId: [''],
       usuarioId: [''],
-      comentario: ['', Validators.required],
+      comentarioIn: ['', Validators.required],
       registroFecha: ['', Validators.required]
     });
 
+    this.getComentarios(this.foroId);
+
   }
 
-  getComentarios() {
+  getComentarios(foroId: number) {
 
     this.jsonService.getForoDataItem(this.foroId).subscribe(
       valor => {
-        console.log("Recuperando foros "+JSON.stringify(valor));
-        this.comentario = valor;
+        console.log("Recuperando comentarios foro "+this.foroId+" "+JSON.stringify(valor));
+        this.comentario = valor._embedded.comentarioDtoList;
       },
       error => {
         console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);
@@ -71,10 +79,10 @@ export class DetalleComponent implements OnInit {
   submitForm() {
 
     console.log(this.comentario.length);
-    this.idNew = this.comentario.length ? this.comentario[this.comentario.length-1].id + 1:1;
+    this.idNew = this.comentario && this.comentario.length ? this.comentario[this.comentario.length-1].id + 1:1;
 
     console.log('Validando');
-    this.comentario = this.miFormulario.get('comentario')!.value;
+    this.comentario = this.miFormulario2.get('comentarioIn')!.value;
 
     let usuarioId: number = 1;
 
@@ -82,7 +90,7 @@ export class DetalleComponent implements OnInit {
       valor => {
         console.log("Feedback inserción foro "+JSON.stringify(valor));
         this.comentario = valor;
-        this.getComentarios();
+        this.getComentarios(this.foroId);
       },
       error => {
         console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);

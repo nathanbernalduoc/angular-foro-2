@@ -4,6 +4,6 @@ import { DetalleComponent } from './components/detalle/detalle.component';
 
 export const routes: Routes = [
     {path: 'principal', component: PrincipalComponent},
-    {path: 'detalle', component: DetalleComponent},
+    {path: 'detalle/:foroId', component: DetalleComponent},
     {path: '**', redirectTo: 'principal'},
 ];

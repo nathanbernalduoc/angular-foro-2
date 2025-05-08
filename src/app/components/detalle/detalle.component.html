@@ -18,8 +18,8 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasRegistro" role="button"
-              aria-controls="offcanvasRegistro" onclick="formularioLimpiar()">
-              Nuevo
+              aria-controls="offcanvasRegistro" onclick="formularioLimpiar2()">
+              Nuevo comentario
             </a>
           </li>
         </ul>
@@ -27,12 +27,12 @@
     </div>
   </nav>
   
-  <h3>Foros</h3>
+  <h3>Foros / Comentarios</h3>
   
   <hr>
   
   <div class="row">
-  
+    Cantidad de comentarios: {{comentario.length}}
     <div *ngIf="comentario && comentario.length>0; else noData">
       <div *ngFor="let c of comentario" class="col-lg-12 col-sm-12">
   
@@ -65,7 +65,7 @@
   
       <div>
   
-        <form [formGroup]="miFormulario" (ngSubmit)="submitForm()">
+        <form [formGroup]="miFormulario2" (ngSubmit)="submitForm()">
   
           <fieldset>
   
@@ -73,10 +73,10 @@
   
             <div>
   
-              <label for="comentario" class="form-label mt-4">Comentario</label>
-              <input type="text" class="form-control" id="comentario" formControlName="comentario" >
-              <div *ngIf="miFormulario.get('comentario')!.touched && miFormulario.get('comentario')!.errors">
-                <div class="alert alert-danger" *ngIf="miFormulario.get('comentario')!.value == ''">
+              <label for="comentarioIn" class="form-label mt-4">Comentario</label>
+              <input type="text" class="form-control" id="comentarioIn" formControlName="comentarioIn" >
+              <div *ngIf="miFormulario2.get('comentarioIn')!.touched && miFormulario2.get('comentarioIn')!.errors">
+                <div class="alert alert-danger" *ngIf="miFormulario2.get('comentarioIn')!.value == ''">
                   El comentario es obligatorio.
                 </div>
               </div>
@@ -84,7 +84,7 @@
             </div>
   
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-info" onclick="formularioLimpiar();">Limpiar</button>
+            <button type="button" class="btn btn-info" onclick="formularioLimpiar2();">Limpiar</button>
   
             <div *ngIf="resultado !== undefined">{{resultado}}</div>
   

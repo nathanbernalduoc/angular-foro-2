@@ -53,8 +53,8 @@ export class PrincipalComponent implements OnInit {
 
     this.jsonService.getForoData().subscribe(
       valor => {
-        console.log("Recuperando foros "+JSON.stringify(valor));
-        this.foro = valor;
+        console.log("Recuperando foros 2 "+JSON.stringify(valor._embedded.foroDtoList));
+        this.foro = valor._embedded.foroDtoList;
       },
       error => {
         console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);
@@ -66,7 +66,7 @@ export class PrincipalComponent implements OnInit {
 
   goDetalle(foroId:string): void {
     console.log('Hola '+foroId);
-    this.router.navigate(['detalle', {foroId: foroId}]);
+    this.router.navigate([ '/detalle', foroId ]);
   }
 
   submitForm() {

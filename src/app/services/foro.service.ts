@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class ForoService {
 
-  private url = '/foro';
-  private url2 = '/comentario';
+  private url = 'http://localhost:8083/foros';
+  private url2 = 'http://localhost:8083/comentarios';
   private foro = {};
   private comentario = {};
 
@@ -19,7 +19,7 @@ export class ForoService {
   }
 
   getForoDataItem(foroId: number): Observable<any> {
-    return this.http.get(this.url+"/"+foroId);
+    return this.http.get(this.url2+"/"+foroId);
   }
 
   setForoData(id: number, nombre:String, categoriaId: number): Observable<any> {
@@ -43,7 +43,7 @@ export class ForoService {
       { 
         comentarioId: null,
         foroId: foroId,
-        usuarioId: usuarioId,
+        usuario: usuarioId.toString(),
         comentario: comentario,
         registroFecha: fechaStr 
       }
