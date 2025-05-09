@@ -22,6 +22,18 @@
             Nuevo
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasRegistro2" role="button"
+            aria-controls="offcanvasRegistro2" onclick="formularioLimpiarRegistro()">
+            Registrarse
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasRegistro3" role="button"
+            aria-controls="offcanvasRegistro3" onclick="formularioLimpiarLogin()">
+            Entrar
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -101,6 +113,133 @@
           <button type="button" class="btn btn-info" onclick="formularioLimpiar();">Limpiar</button>
 
           <div *ngIf="resultado !== undefined">{{resultado}}</div>
+
+        </fieldset>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRegistro2" aria-labelledby="offcanvasRegistro2Label">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasRegistro2Label">Registro</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <div>
+
+      <form [formGroup]="miFormulario2" (ngSubmit)="submitForm2()">
+
+        <fieldset>
+
+          <legend>Registro de usuario</legend>
+
+          <div>
+
+
+            <label for="usuario" class="form-label mt-4">Usuario</label>
+            <input type="text" class="form-control" id="usuario" formControlName="usuario" >
+            <div *ngIf="miFormulario2.get('usuario')!.touched && miFormulario2.get('usuario')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario2.get('usuario')!.value == ''">
+                El campo usuario es obligatorio.
+              </div>
+            </div>
+
+            <label for="password" class="form-label mt-4">Password</label>
+            <input type="password" class="form-control" id="password" formControlName="password" >
+            <div *ngIf="miFormulario2.get('password')!.touched && miFormulario2.get('password')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario2.get('password')!.value == ''">
+                El campo password es obligatorio.
+              </div>
+            </div>
+
+            <label for="nombre" class="form-label mt-4">Nombres</label>
+            <input type="text" class="form-control" id="nombres" formControlName="nombres" >
+            <div *ngIf="miFormulario2.get('nombres')!.touched && miFormulario2.get('nombres')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario2.get('nombres')!.value == ''">
+                Campo nombres es obligatorio.
+              </div>
+            </div>
+
+            <label for="apellidos" class="form-label mt-4">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" formControlName="apellidos" >
+            <div *ngIf="miFormulario2.get('apellidos')!.touched && miFormulario2.get('apellidos')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario2.get('apellidos')!.value == ''">
+                Campo apellidos es obligatorio.
+              </div>
+            </div>
+
+          </div>
+
+          <div>
+            <label for="rol" class="form-label mt-4">Rol</label>
+            <select class="form-control" id="rol" formControlName="rol">
+              <option value="1">USUARIO</option>
+              <option value="2">ADMIN</option>
+            </select>
+            <div *ngIf="miFormulario2.get('rol')!.touched && miFormulario2.get('rol')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario2.get('rol')!.hasError('required')">
+                El rol es obligatorio.
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <button type="submit" [disabled]="!miFormulario2.valid" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-info" onclick="formularioLimpiar2();">Limpiar</button>
+
+          <div *ngIf="resultado2 !== undefined">{{resultado2}}</div>
+
+        </fieldset>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRegistro3" aria-labelledby="offcanvasRegistro3Label">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasRegistro3Label">Registro</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <div>
+
+      <form [formGroup]="miFormulario3" (ngSubmit)="submitFormLogin()">
+
+        <fieldset>
+
+          <legend>Entrar</legend>
+
+          <div>
+
+
+            <label for="usuario" class="form-label mt-4">Usuario</label>
+            <input type="text" class="form-control" id="usuario2" formControlName="usuario2" >
+            <div *ngIf="miFormulario3.get('usuario2')!.touched && miFormulario3.get('usuario2')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario3.get('usuario2')!.value == ''">
+                El campo usuario es obligatorio.
+              </div>
+            </div>
+
+            <label for="password" class="form-label mt-4">Password</label>
+            <input type="password" class="form-control" id="password" formControlName="password" >
+            <div *ngIf="miFormulario3.get('password')!.touched && miFormulario3.get('password')!.errors">
+              <div class="alert alert-danger" *ngIf="miFormulario3.get('password')!.value == ''">
+                El campo password es obligatorio.
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <button type="submit" [disabled]="!miFormulario3.valid" class="btn btn-primary">Entrar</button>
+
+          <div *ngIf="resultado3 !== undefined">{{resultado3}}</div>
 
         </fieldset>
 

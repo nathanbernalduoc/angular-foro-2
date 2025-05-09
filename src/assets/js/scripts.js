@@ -67,6 +67,21 @@ function formularioLimpiar() {
 
 }
 
+function formularioLimpiarRegistro() {
+
+    document.getElementById('usuario').value = '';
+    document.getElementById('nombres').value = '';
+    document.getElementById('apellidos').value = '';
+    document.getElementById('rol').value = '';
+
+}
+
+function formularioLimpiarLogin() {
+
+    document.getElementById('usuario').value = '';
+    document.getElementById('password').value = '';
+
+}
 
 function formularioLimpiar2() {
 

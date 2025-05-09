@@ -18,7 +18,9 @@ import { Observable } from 'rxjs';
 
 export class PrincipalComponent implements OnInit {
 
-  resultado:string = '';
+  resultado: String = '';
+  resultado2: String = '';
+  resultado3: String = '';
   titulo = 'Foro';
   foro: any[] = []; // {} objeto | [] array
   inventario: any[] = []; // {} objeto | [] array
@@ -26,7 +28,16 @@ export class PrincipalComponent implements OnInit {
   categoriaId: number = 0;
   idNew: number = 0;
 
+  usuario: String = "";
+  usuario2: String = "";
+  nombres: String = "";
+  apellidos: String = "";
+  password: String = "";
+  rol: number = 1;
+
   miFormulario!: FormGroup;
+  miFormulario2!: FormGroup;
+  miFormulario3!: FormGroup;
 
   constructor(
     private router: Router,
@@ -44,6 +55,19 @@ export class PrincipalComponent implements OnInit {
       foroId: [''],
       nombre: ['', Validators.required],
       categoriaId: ['', Validators.required]
+    });
+
+    this.miFormulario2 = this.fb.group({
+      usuario: ['', Validators.required],
+      nombres: ['', Validators.required],
+      apellidos: [''],
+      password: ['', Validators.required],
+      rol: [1]
+    });
+
+    this.miFormulario3 = this.fb.group({
+      usuario2: ['', Validators.required],
+      password: ['', Validators.required],
     });
 
   }
@@ -87,6 +111,52 @@ export class PrincipalComponent implements OnInit {
         console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);
       },
       () => { console.log('Ending!'); } 
+    );
+
+
+  }
+
+  submitForm2() {
+
+    this.usuario = this.miFormulario2.get('usuario')!.value;
+    this.password = this.miFormulario2.get('password')!.value;
+    this.nombres = this.miFormulario2.get('nombres')!.value;
+    this.apellidos = this.miFormulario2.get('apellidos')!.value;
+    this.rol = this.miFormulario2.get('rol')!.value;
+
+    this.jsonService.setForoDataUsuario(this.usuario, this.password, this.nombres, this.apellidos, this.rol).subscribe(
+      usuarioItem => {
+        console.log("Feedback inserción foro "+JSON.stringify(usuarioItem));
+        this.resultado2 = (usuarioItem)?"Usuario creado correctamente":"Se ha producido un error al intentar crear el usaurio.";
+        //this.getForo();
+      },
+      error => {
+        console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);
+      },
+      () => { console.log('Ending!'); } 
+    );
+
+
+  }
+
+  submitFormLogin() {
+
+    this.usuario2 = this.miFormulario3.get('usuario2')!.value;
+    this.password = this.miFormulario3.get('password')!.value;
+
+    console.log("Usuario : "+this.usuario2+" / Password: "+this.password);
+
+    this.jsonService.setLogin(this.usuario2, this.password).subscribe(
+      login => {
+        console.log("Feedback login "+JSON.stringify(login));
+        this.resultado3 = (login.status == true)?"LOGIN OK!":"Credenciales incorrectas.";
+      },
+      error => {
+        console.log("Se ha producido un error\nApi Recover error: "+error.message+" / "+error.status);
+      },
+      () => { console.log('Ending!'); } 
+
+
     );
 
 
