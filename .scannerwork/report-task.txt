@@ -1,0 +1,6 @@
+projectKey=Angular-Foro
+serverUrl=http://localhost:9000
+serverVersion=25.5.0.107428
+dashboardUrl=http://localhost:9000/dashboard?id=Angular-Foro
+ceTaskId=8b5f8e3d-c840-48d3-8f47-e2146fdc3aa9
+ceTaskUrl=http://localhost:9000/api/ce/task?id=8b5f8e3d-c840-48d3-8f47-e2146fdc3aa9
